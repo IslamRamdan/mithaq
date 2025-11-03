@@ -13,7 +13,7 @@ class WorkerController extends Controller
         // ✅ الفاليديشن
         $validated = $request->validate([
             'name' => ['nullable', 'regex:/^[\p{Arabic}\s]+$/u'],
-            'national_id' => ['nullable', 'digits:14', 'regex:/^[23]\d{13}$/'],
+            'national_id' => ['nullable', 'digits:14', 'regex:/^[23]\d{13}$/', 'unique:workers,national_id'],
             'job_title' => ['nullable', 'string', 'max:255'],
             'phone' => ['required', 'regex:/^(010|011|012|015)[0-9]{8}$/', 'unique:workers,phone'],
             'personal_photo' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
@@ -23,6 +23,7 @@ class WorkerController extends Controller
             'name.regex' => 'الاسم يجب أن يكون باللغة العربية فقط.',
             'national_id.digits' => 'الرقم القومي يجب أن يتكون من 14 رقمًا.',
             'national_id.regex' => 'الرقم القومي غير صالح.',
+            'national_id.unique' => 'هذا الرقم القومي مسجل بالفعل.',
             'phone.required' => 'رقم الهاتف مطلوب.',
             'phone.regex' => 'رقم الهاتف يجب أن يبدأ بـ 010 أو 011 أو 012 أو 015 ويتكون من 11 رقمًا.',
             'phone.unique' => 'لقد قومت بالتسجيل بالفعل',

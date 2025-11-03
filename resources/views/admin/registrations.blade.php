@@ -13,6 +13,23 @@
             <div class="card-body"
                 style="background: linear-gradient(135deg, #fff 85%, #f8fafc 100%);
                    border-radius: 0 0 18px 18px;">
+                <div class="row text-center mb-4">
+                    <div class="col-md-6 mb-3">
+                        <div class="p-4 shadow-sm rounded-4 text-white fw-bold"
+                            style="background: linear-gradient(135deg, #174A7C 60%, #B89C5A 100%);">
+                            <h5 class="mb-1" style="color:#fff !important">العمالة المسجلة اليوم</h5>
+                            <h3 class="mb-0"style="color:#fff !important">{{ $todayCount }}</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="p-4 shadow-sm rounded-4 text-white fw-bold"
+                            style="background: linear-gradient(135deg, #B89C5A 60%, #174A7C 100%);">
+                            <h5 class="mb-1" style="color:#fff !important">إجمالي العمالة المسجلة</h5>
+                            <h3 class="mb-0"style="color:#fff !important">{{ $totalCount }}</h3>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="table-responsive">
                     <table class="table table-bordered align-middle text-center table-hover bg-white mb-0">
                         <thead

@@ -35,6 +35,11 @@ class RegisterController extends Controller
   public function list()
   {
     $workers = \App\Models\Worker::latest()->paginate(10);
-    return view('admin.registrations', compact('workers'));
+    // عدد العمالة المسجلين اليوم
+    $todayCount = \App\Models\Worker::whereDate('created_at', now()->toDateString())->count();
+
+    // إجمالي العمالة المسجلة
+    $totalCount = \App\Models\Worker::count();
+    return view('admin.registrations', compact('workers', 'todayCount', 'totalCount'));
   }
 }
