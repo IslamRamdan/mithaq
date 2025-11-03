@@ -13,9 +13,9 @@ class WorkerController extends Controller
         // ✅ الفاليديشن
         $validated = $request->validate([
             'name' => ['nullable', 'regex:/^[\p{Arabic}\s]+$/u'],
-            'national_id' => ['nullable', 'digits:14', 'regex:/^[23]\d{13}$/', 'unique:workers,national_id'],
+            'national_id' => ['nullable', 'digits:14', 'regex:/^[23]\d{13}$/'],
             'job_title' => ['nullable', 'string', 'max:255'],
-            'phone' => ['required', 'regex:/^(010|011|012|015)[0-9]{8}$/'],
+            'phone' => ['required', 'regex:/^(010|011|012|015)[0-9]{8}$/', 'unique:workers,phone'],
             'personal_photo' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
             'id_card_photo' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
             'message' => ['nullable', 'string', 'max:2000'],
@@ -23,13 +23,14 @@ class WorkerController extends Controller
             'name.regex' => 'الاسم يجب أن يكون باللغة العربية فقط.',
             'national_id.digits' => 'الرقم القومي يجب أن يتكون من 14 رقمًا.',
             'national_id.regex' => 'الرقم القومي غير صالح.',
-            'national_id.unique' => 'هذا الرقم القومي مسجل بالفعل.',
             'phone.required' => 'رقم الهاتف مطلوب.',
             'phone.regex' => 'رقم الهاتف يجب أن يبدأ بـ 010 أو 011 أو 012 أو 015 ويتكون من 11 رقمًا.',
+            'phone.unique' => 'لقد قومت بالتسجيل بالفعل',
             'personal_photo.image' => 'يجب أن تكون الصورة بصيغة صحيحة (JPG أو PNG).',
             'personal_photo.max' => 'أقصى حجم مسموح للصورة هو 2 ميجابايت.',
             'id_card_photo.image' => 'يجب أن تكون صورة البطاقة بصيغة صحيحة (JPG أو PNG).',
         ]);
+
 
         // ✅ رفع الملفات إن وجدت
         if ($request->hasFile('personal_photo')) {
