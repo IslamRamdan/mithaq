@@ -63,7 +63,8 @@
                                     <td>{{ $worker->national_id }}</td>
                                     <td>{{ $worker->job_title }}</td>
                                     <td dir="ltr">
-                                        <a href="tel:{{ $worker->phone }}" class="text-decoration-none text-dark">
+                                        <a href="https://wa.me/2{{ preg_replace('/\D/', '', $worker->phone) }}"
+                                            target="_blank" class="text-decoration-none text-success">
                                             {{ $worker->phone }}
                                         </a>
                                     </td>
