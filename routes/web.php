@@ -106,3 +106,4 @@ Route::view('/privacy', 'privacy')->name('privacy');
 
 Route::view('/delete-account', 'delete-account')->name('delete.account');
 Route::post('/register-apply', [WorkerController::class, 'store'])->name('register.apply');
+Route::post('/workers/{id}/save-note', [WorkerController::class, 'saveNote'])->name('workers.saveNote');

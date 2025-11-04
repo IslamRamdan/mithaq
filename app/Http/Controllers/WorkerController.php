@@ -47,4 +47,11 @@ class WorkerController extends Controller
 
         return redirect()->back()->with('success', 'تم تسجيل بياناتك بنجاح ✅');
     }
+    public function saveNote(Request $request, $id)
+    {
+        $worker = Worker::findOrFail($id);
+        $worker->message = $request->notes;
+        $worker->save();
+        return response()->json(['success' => true, 'message' => 'تم حفظ الملاحظة بنجاح']);
+    }
 }

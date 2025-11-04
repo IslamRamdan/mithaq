@@ -34,7 +34,7 @@ class RegisterController extends Controller
 
   public function list()
   {
-    $workers = \App\Models\Worker::latest()->paginate(10);
+    $workers = \App\Models\Worker::paginate(20);
     // عدد العمالة المسجلين اليوم
     $todayCount = \App\Models\Worker::whereDate('created_at', now()->toDateString())->count();
 

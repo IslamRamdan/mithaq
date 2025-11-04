@@ -79,7 +79,14 @@
                                             <span class="text-muted">—</span>
                                         @endif
                                     </td>
-                                    <td class="text-muted">{{ $worker->message ?? '—' }}</td>
+                                    <td class="text-muted d-flex">
+                                        <input type="text" value="{{ $worker->message }}"
+                                            class="form-control form-control-sm note-input" data-id="{{ $worker->id }}">
+                                        <button type="button" class="btn btn-sm btn-primary save-note-btn"
+                                            data-id="{{ $worker->id }}" style="border-radius: 0">
+                                            حفظ
+                                        </button>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
@@ -99,5 +106,44 @@
                 @endif
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const buttons = document.querySelectorAll('.save-note-btn');
+
+                buttons.forEach(button => {
+                    button.addEventListener('click', async function() {
+                        const id = this.dataset.id;
+                        const input = document.querySelector(`.note-input[data-id="${id}"]`);
+                        const note = input.value;
+
+                        try {
+                            const response = await fetch(`/workers/${id}/save-note`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    notes: note
+                                })
+                            });
+
+                            const data = await response.json();
+                            console.log(data);
+
+                            if (data.success) {
+                                alert('✅ تم حفظ الملاحظة بنجاح');
+                            } else {
+                                alert('⚠️ حدث خطأ أثناء الحفظ');
+                            }
+
+                        } catch (error) {
+                            console.error(error);
+                            alert('❌ فشل الاتصال بالخادم');
+                        }
+                    });
+                });
+            });
+        </script>
     </div>
 @endsection
