@@ -8,7 +8,7 @@
                 style="background: linear-gradient(135deg, #174A7C 60%, #B89C5A 100%);
                    color: #fff; border-radius: 18px 18px 0 0;">
                 <h4 class="mb-0 fw-bold" style="color: #fff !important;">قائمة العمالة المسجلة</h4>
-                <a href="{{ route('register.apply.admin') }}"
+                <a href="{{ route('admin.signLead') }}"
                     style="display:inline-block; padding:10px 20px; background: linear-gradient(135deg, #174A7C 0%, #1a5a94 50%, #B89C5A 100%);
           color:white !important; text-decoration:none; border-radius:25px; font-weight:700; transition: all 0.3s ease;"
                     onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(23,74,124,0.4)';"
