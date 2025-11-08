@@ -98,6 +98,7 @@ Route::post('/companies/apply', [\App\Http\Controllers\CompanyController::class,
 Route::get('/admin/companies-requests', [App\Http\Controllers\CompanyController::class, 'list'])->name('admin.companies.requests');
 Route::post('/admin/companies-requests/{index}/status', [App\Http\Controllers\CompanyController::class, 'updateStatus'])->name('admin.companies.requests.status');
 
+Route::get('/admin/sign', [App\Http\Controllers\AdminController::class, 'signLead'])->name('admin.signLead');
 Route::middleware(['admin'])->group(function () {
   Route::get('/admin/contacts', [App\Http\Controllers\AdminController::class, 'contacts'])->name('admin.contacts');
 });
@@ -106,4 +107,5 @@ Route::view('/privacy', 'privacy')->name('privacy');
 
 Route::view('/delete-account', 'delete-account')->name('delete.account');
 Route::post('/register-apply', [WorkerController::class, 'store'])->name('register.apply');
+Route::post('/register-apply/admin', [AdminController::class, 'store'])->name('register.apply.admin');
 Route::post('/workers/{id}/save-note', [WorkerController::class, 'saveNote'])->name('workers.saveNote');

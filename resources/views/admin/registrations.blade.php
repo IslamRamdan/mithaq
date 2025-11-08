@@ -42,6 +42,7 @@
                                 <th>الوظيفة</th>
                                 <th>رقم الهاتف</th>
                                 <th>صورة البطاقة</th>
+                                <th>العميل</th>
                                 <th>ملاحظات</th>
                             </tr>
                         </thead>
@@ -80,6 +81,7 @@
                                             <span class="text-muted">—</span>
                                         @endif
                                     </td>
+                                    <td>{{ $worker->user ?? '-' }}</td>
                                     <td class="text-muted d-flex">
                                         <input type="text" value="{{ $worker->message }}"
                                             class="form-control form-control-sm note-input" data-id="{{ $worker->id }}">

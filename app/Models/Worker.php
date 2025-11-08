@@ -17,5 +17,6 @@ class Worker extends Model
         'personal_photo',
         'id_card_photo',
         'message',
+        'user',
     ];
 }
