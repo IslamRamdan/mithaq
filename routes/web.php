@@ -102,6 +102,8 @@ Route::get('/admin/sign', [App\Http\Controllers\AdminController::class, 'signLea
 Route::middleware(['admin'])->group(function () {
   Route::get('/admin/contacts', [App\Http\Controllers\AdminController::class, 'contacts'])->name('admin.contacts');
 });
+Route::get('/admin/update/{id}', [App\Http\Controllers\AdminController::class, 'update'])->name('admin.update-sign');
+Route::post('/admin/update/{id}', [App\Http\Controllers\AdminController::class, 'edit'])->name('admin.edit-sign');
 
 Route::view('/privacy', 'privacy')->name('privacy');
 

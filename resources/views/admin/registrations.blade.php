@@ -15,7 +15,6 @@
                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(23,74,124,0.3)';">
                     ✨ تسجيل
                 </a>
-
             </div>
 
             <div class="card-body"
@@ -97,6 +96,11 @@
                                             data-id="{{ $worker->id }}" style="border-radius: 0">
                                             حفظ
                                         </button>
+                                        <a class="btn btn-sm btn-primary save-note-btn"
+                                            style="border-radius: 0; margin-left:5px; background-color: #B89C5A !important;"
+                                            href="{{ route('admin.update-sign', $worker->id) }}" target="_blank">
+                                            تعديل
+                                        </a>
                                     </td>
                                 </tr>
                             @empty

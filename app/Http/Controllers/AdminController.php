@@ -855,6 +855,14 @@ class AdminController extends Controller
     }
     public function store(Request $request)
     {
+        // 🔹 أولاً: تحقق إن كان رقم الهاتف موجود مسبقًا
+        $existingWorker = Worker::where('phone', $request->phone)->first();
+
+        if ($existingWorker) {
+            // إذا العامل موجود مسبقًا → توجه مباشرة لصفحة التعديل
+            return redirect()->route('admin.update-sign', $existingWorker->id)
+                ->with('info', 'لقد قمت بالتسجيل مسبقًا، يمكنك تعديل بياناتك الآن.');
+        }
         // ✅ الفاليديشن
         $validated = $request->validate([
             'name' => ['nullable', 'regex:/^[\p{Arabic}\s]+$/u'],
@@ -892,5 +900,49 @@ class AdminController extends Controller
         Worker::create($validated);
 
         return redirect()->back()->with('success', 'تم تسجيل بياناتك بنجاح ✅');
+    }
+    public function update($id)
+    {
+        # code...
+        $worker = Worker::findOrFail($id);
+        return view('admin.update-sign', compact('worker'));
+    }
+    public function edit(Request $request, $id)
+    {
+        // 🔹 أولاً: جلب العامل
+        $worker = Worker::findOrFail($id);
+
+        // ✅ الفاليديشن
+        $validated = $request->validate([
+            'name' => ['nullable', 'regex:/^[\p{Arabic}\s]+$/u'],
+            'national_id' => ['nullable', 'digits:14', 'regex:/^[23]\d{13}$/', 'unique:workers,national_id,' . $worker->id],
+            'job_title' => ['nullable', 'string', 'max:255'],
+            'phone' => ['required', 'regex:/^(010|011|012|015)[0-9]{8}$/', 'unique:workers,phone,' . $worker->id],
+            'personal_photo' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
+            'id_card_photo' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
+            'message' => ['nullable', 'string', 'max:2000'],
+        ], [
+            'name.regex' => 'الاسم يجب أن يكون باللغة العربية فقط.',
+            'national_id.digits' => 'الرقم القومي يجب أن يتكون من 14 رقمًا.',
+            'national_id.regex' => 'الرقم القومي غير صالح.',
+            'national_id.unique' => 'هذا الرقم القومي مسجل بالفعل.',
+            'phone.required' => 'رقم الهاتف مطلوب.',
+            'phone.regex' => 'رقم الهاتف يجب أن يبدأ بـ 010 أو 011 أو 012 أو 015 ويتكون من 11 رقمًا.',
+            'phone.unique' => 'رقم الهاتف مسجل بالفعل.',
+            'personal_photo.image' => 'يجب أن تكون الصورة بصيغة صحيحة (JPG أو PNG).',
+            'personal_photo.max' => 'أقصى حجم مسموح للصورة هو 2 ميجابايت.',
+            'id_card_photo.image' => 'يجب أن تكون صورة البطاقة بصيغة صحيحة (JPG أو PNG).',
+        ]);
+
+        // ✅ رفع الملفات إن وجدت
+        if ($request->hasFile('personal_photo')) {
+            $validated['personal_photo'] = $request->file('personal_photo')->store('workers/photos', 'public');
+        }
+        if ($request->hasFile('id_card_photo')) {
+            $validated['id_card_photo'] = $request->file('id_card_photo')->store('workers/id_cards', 'public');
+        }
+        // ✅ تحديث السجل
+        $worker->update($validated);
+        return redirect()->back()->with('success', 'تم تحديث بياناتك بنجاح ✅');
     }
 }

@@ -166,7 +166,7 @@
             <main class="col-lg-8 col-md-10 mx-auto">
                 <div class="card registration-card">
                     <div class="card-header-custom text-center">
-                        <h4>📝 نموذج تسجيل الشركات</h4>
+                        <h4 style="color: white !important; font-weight: bold;">📝التعديل علي : ({{ $worker->name }})</h4>
                     </div>
 
                     <div class="card-body-custom">
@@ -177,21 +177,9 @@
                             </div>
                         @endif
 
-                        {{-- ⚠️ الأخطاء --}}
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <strong>يرجى تصحيح الأخطاء التالية:</strong>
-                                <ul class="mb-0 mt-2">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
                         {{-- ✅ نموذج التسجيل --}}
-                        <form method="POST" action="{{ route('register.apply.admin') }}" enctype="multipart/form-data"
-                            id="registrationForm">
+                        <form method="POST" action="{{ route('admin.edit-sign', $worker->id) }}"
+                            enctype="multipart/form-data" id="registrationForm">
                             @csrf
 
                             {{-- الاسم الكامل --}}
@@ -199,8 +187,8 @@
                                 <label class="form-label">👤 الاسم الكامل <span
                                         class="optional-badge">(اختياري)</span></label>
                                 <input type="text" name="name" id="name"
-                                    class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
-                                    placeholder="أدخل اسمك بالعربية فقط">
+                                    class="form-control @error('name') is-invalid @enderror" value="{{ $worker->name }}"
+                                    placeholder="أدخل اسمك بالعربية فقط" required>
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -212,7 +200,7 @@
                                         class="optional-badge">(اختياري)</span></label>
                                 <input type="text" name="national_id" id="national_id" maxlength="14"
                                     class="form-control @error('national_id') is-invalid @enderror"
-                                    value="{{ old('national_id') }}" placeholder="مثال: 29501011234567">
+                                    value="{{ $worker->national_id }}" placeholder="مثال: 29501011234567">
                                 @error('national_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -224,7 +212,7 @@
                                 <label class="form-label">💼 الوظيفة المطلوبة <span
                                         class="optional-badge">(اختياري)</span></label>
                                 <select id="job_title" name="job_title"
-                                    class="form-select @error('job_title') is-invalid @enderror">
+                                    class="form-select @error('job_title') is-invalid @enderror" required>
                                     <option value="">جاري تحميل الوظائف...</option>
                                 </select>
                                 @error('job_title')
@@ -234,15 +222,24 @@
                                     <span class="loading-spinner"></span> جاري تحميل الوظائف المتاحة...
                                 </small>
                             </div>
+
                             {{-- الموظف --}}
                             <div class="mb-4">
                                 <label class="form-label">الموظف</label>
                                 <select name="user" class="form-select" required>
-                                    <option value="">اختر العميل</option> <!-- خيار افتراضي لا يُعتبر اختيارًا -->
-                                    <option value="خالد علاء">خالد علاء</option>
-                                    <option value="احمد بشير">احمد بشير</option>
-                                    <option value="احمد محمود">احمد محمود</option>
-                                    <option value="اسلام رمضان">اسلام رمضان</option>
+                                    <option value="">اختر العميل</option>
+                                    <option value="خالد علاء"
+                                        {{ old('user', $worker->user ?? '') == 'خالد علاء' ? 'selected' : '' }}>خالد علاء
+                                    </option>
+                                    <option value="احمد بشير"
+                                        {{ old('user', $worker->user ?? '') == 'احمد بشير' ? 'selected' : '' }}>احمد بشير
+                                    </option>
+                                    <option value="احمد محمود"
+                                        {{ old('user', $worker->user ?? '') == 'احمد محمود' ? 'selected' : '' }}>احمد محمود
+                                    </option>
+                                    <option value="اسلام رمضان"
+                                        {{ old('user', $worker->user ?? '') == 'اسلام رمضان' ? 'selected' : '' }}>اسلام
+                                        رمضان</option>
                                 </select>
                             </div>
 
@@ -250,7 +247,7 @@
                             <div class="mb-4">
                                 <label class="form-label">📱 رقم الهاتف <span class="required-field">*</span></label>
                                 <input type="text" name="phone" id="phone" maxlength="11" required
-                                    class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}"
+                                    class="form-control @error('phone') is-invalid @enderror" value="{{ $worker->phone }}"
                                     placeholder="مثال: 01012345678">
                                 @error('phone')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -293,7 +290,7 @@
                             </div>
 
                             {{-- زر التسجيل --}}
-                            <button type="submit" class="submit-btn">✨ تسجيل البيانات</button>
+                            <button type="submit" class="submit-btn">✨ حفظ </button>
                         </form>
                     </div>
                 </div>
@@ -304,7 +301,9 @@
             async function loadJobs() {
                 const jobSelect = document.getElementById('job_title');
                 const loadingText = document.getElementById('jobsLoadingText');
-                const oldValue = "{{ old('job_title') }}";
+
+                // ✅ القيمة القديمة أو الحالية من العامل
+                const oldValue = "{{ old('job_title', $worker->job_title ?? '') }}";
 
                 try {
                     const response = await fetch('https://mishcrm.com/api/jobs');
@@ -320,7 +319,7 @@
                             option.value = job.title;
                             option.textContent = job.title;
 
-                            // استرجاع القيمة القديمة في حالة validation error
+                            // ✅ تحديد القيمة القديمة أو الحالية
                             if (oldValue && oldValue === job.title) {
                                 option.selected = true;
                             }
@@ -351,68 +350,6 @@
 
             // تحميل الوظائف عند تحميل الصفحة
             document.addEventListener('DOMContentLoaded', loadJobs);
-
-            // Validation للرقم القومي
-            document.getElementById('national_id').addEventListener('input', function(e) {
-                this.value = this.value.replace(/[^0-9]/g, '');
-                if (this.value.length > 14) {
-                    this.value = this.value.slice(0, 14);
-                }
-            });
-
-            // Validation لرقم الهاتف
-            document.getElementById('phone').addEventListener('input', function(e) {
-                this.value = this.value.replace(/[^0-9]/g, '');
-                if (this.value.length > 11) {
-                    this.value = this.value.slice(0, 11);
-                }
-            });
-
-            // Validation للاسم العربي
-            document.getElementById('name').addEventListener('input', function(e) {
-                this.value = this.value.replace(/[^\u0600-\u06FF\s]/g, '');
-            });
-
-            // Custom validation عند الإرسال
-            document.getElementById('registrationForm').addEventListener('submit', function(e) {
-                const phone = document.getElementById('phone').value;
-                const nationalId = document.getElementById('national_id').value;
-
-                // التحقق من رقم الهاتف
-                if (!/^(010|011|012|015)[0-9]{8}$/.test(phone)) {
-                    e.preventDefault();
-                    alert('⚠️ رقم الهاتف غير صحيح.\nيجب أن يبدأ بـ 010 أو 011 أو 012 أو 015 ويتكون من 11 رقماً');
-                    document.getElementById('phone').focus();
-                    return false;
-                }
-
-                // التحقق من الرقم القومي إذا تم إدخاله
-                if (nationalId && nationalId.length !== 14) {
-                    e.preventDefault();
-                    alert('⚠️ الرقم القومي يجب أن يتكون من 14 رقماً');
-                    document.getElementById('national_id').focus();
-                    return false;
-                }
-            });
-
-            // Preview للصور المرفوعة
-            function previewImage(input, previewId) {
-                if (input.files && input.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        // يمكن إضافة معاينة للصورة هنا إذا أردت
-                    };
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-
-            document.getElementById('personal_photo')?.addEventListener('change', function() {
-                previewImage(this, 'personalPhotoPreview');
-            });
-
-            document.getElementById('id_card_photo')?.addEventListener('change', function() {
-                previewImage(this, 'idCardPhotoPreview');
-            });
         </script>
     </div>
 @endsection
