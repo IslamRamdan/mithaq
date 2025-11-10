@@ -941,6 +941,8 @@ class AdminController extends Controller
         if ($request->hasFile('id_card_photo')) {
             $validated['id_card_photo'] = $request->file('id_card_photo')->store('workers/id_cards', 'public');
         }
+        $validated['user'] = $request->user;
+
         // ✅ تحديث السجل
         $worker->update($validated);
         return redirect()->back()->with('success', 'تم تحديث بياناتك بنجاح ✅');
