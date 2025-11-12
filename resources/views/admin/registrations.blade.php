@@ -4,7 +4,7 @@
 @section('content')
     <div class="container py-5">
         <div class="card shadow-sm" style="border-radius:18px; border:1px solid #e5e7eb;">
-            <div class="card-header text-center"
+            <div class="card-header text-center d-flex justify-content-around align-content-center"
                 style="background: linear-gradient(135deg, #174A7C 60%, #B89C5A 100%);
                    color: #fff; border-radius: 18px 18px 0 0;">
                 <h4 class="mb-0 fw-bold" style="color: #fff !important;">قائمة العمالة المسجلة</h4>
@@ -20,22 +20,41 @@
             <div class="card-body"
                 style="background: linear-gradient(135deg, #fff 85%, #f8fafc 100%);
                    border-radius: 0 0 18px 18px;">
-                <div class="row text-center mb-4">
-                    <div class="col-md-6 mb-3">
-                        <div class="p-4 shadow-sm rounded-4 text-white fw-bold"
-                            style="background: linear-gradient(135deg, #174A7C 60%, #B89C5A 100%);">
-                            <h5 class="mb-1" style="color:#fff !important">العمالة المسجلة اليوم</h5>
-                            <h3 class="mb-0"style="color:#fff !important">{{ $todayCount }}</h3>
-                        </div>
+                <!-- Search Form -->
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <form action="{{ route('admin.registrations.search') }}" method="GET" class="d-flex">
+                            <input type="text" name="phone" class="form-control me-2" placeholder="أدخل رقم الهاتف"
+                                required>
+                            <button type="submit" class="btn btn-primary">بحث</button>
+                        </form>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <div class="p-4 shadow-sm rounded-4 text-white fw-bold"
-                            style="background: linear-gradient(135deg, #B89C5A 60%, #174A7C 100%);">
-                            <h5 class="mb-1" style="color:#fff !important">إجمالي العمالة المسجلة</h5>
-                            <h3 class="mb-0"style="color:#fff !important">{{ $totalCount }}</h3>
-                        </div>
-                    </div>
+                    @if (Route::currentRouteName() === 'admin.registrations.search')
+                        <a class="btn btn-primary" href="{{ route('admin.registrations') }}">كل العملاء</a>
+                    @endif
                 </div>
+
+                <!-- Cards -->
+                @if (
+                    $workers instanceof \Illuminate\Pagination\LengthAwarePaginator &&
+                        Route::currentRouteName() !== 'admin.registrations.search')
+                    <div class="row text-center mb-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="p-4 shadow-sm rounded-4 text-white fw-bold"
+                                style="background: linear-gradient(135deg, #174A7C 60%, #B89C5A 100%);">
+                                <h5 class="mb-1" style="color:#fff !important">العمالة المسجلة اليوم</h5>
+                                <h3 class="mb-0" style="color:#fff !important">{{ $todayCount }}</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="p-4 shadow-sm rounded-4 text-white fw-bold"
+                                style="background: linear-gradient(135deg, #B89C5A 60%, #174A7C 100%);">
+                                <h5 class="mb-1" style="color:#fff !important">إجمالي العمالة المسجلة</h5>
+                                <h3 class="mb-0" style="color:#fff !important">{{ $totalCount }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                @endif
 
                 <div class="table-responsive">
                     <table class="table table-bordered align-middle text-center table-hover bg-white mb-0">
@@ -114,7 +133,13 @@
                     </table>
                 </div>
 
-                @if ($workers->hasPages())
+                @php
+                    $currentRoute = Route::currentRouteName();
+                @endphp
+
+                @if (
+                    $workers instanceof \Illuminate\Pagination\LengthAwarePaginator &&
+                        Route::currentRouteName() !== 'admin.registrations.search')
                     <div class="mt-4">
                         {{ $workers->links('pagination::bootstrap-5') }}
                     </div>

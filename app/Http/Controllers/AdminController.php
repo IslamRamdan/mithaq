@@ -947,4 +947,19 @@ class AdminController extends Controller
         $worker->update($validated);
         return redirect()->back()->with('success', 'تم تحديث بياناتك بنجاح ✅');
     }
+
+    public function search(Request $request)
+    {
+        # code...
+        $phone = $request->query('phone'); // يحصل على قيمة من query parameter
+
+        $workers = Worker::where('phone', $phone)->get();
+        // $workers = \App\Models\Worker::orderBy('updated_at', 'asc')->paginate(20);
+        // عدد العمالة المسجلين اليوم
+        $todayCount = \App\Models\Worker::whereDate('created_at', now()->toDateString())->count();
+
+        // إجمالي العمالة المسجلة
+        $totalCount = \App\Models\Worker::count();
+        return view('admin.registrations', compact('workers', 'todayCount', 'totalCount'));
+    }
 }

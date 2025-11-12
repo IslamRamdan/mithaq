@@ -92,6 +92,7 @@ Route::post('/admin/jobs/update/{id}', [\App\Http\Controllers\JobController::cla
 Route::post('/register/apply', [\App\Http\Controllers\RegisterController::class, 'apply'])->name('register.apply');
 
 Route::get('/admin/registrations', [\App\Http\Controllers\RegisterController::class, 'list'])->name('admin.registrations');
+Route::get('/admin/registrations/search', [\App\Http\Controllers\AdminController::class, 'search'])->name('admin.registrations.search');
 
 Route::post('/companies/apply', [\App\Http\Controllers\CompanyController::class, 'apply'])->name('companies.apply');
 
