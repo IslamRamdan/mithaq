@@ -39,14 +39,28 @@
                     $workers instanceof \Illuminate\Pagination\LengthAwarePaginator &&
                         Route::currentRouteName() !== 'admin.registrations.search')
                     <div class="row text-center mb-4">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-3 mb-3">
                             <div class="p-4 shadow-sm rounded-4 text-white fw-bold"
                                 style="background: linear-gradient(135deg, #174A7C 60%, #B89C5A 100%);">
                                 <h5 class="mb-1" style="color:#fff !important">العمالة المسجلة اليوم</h5>
                                 <h3 class="mb-0" style="color:#fff !important">{{ $todayCount }}</h3>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-3 mb-3">
+                            <div class="p-4 shadow-sm rounded-4 text-white fw-bold"
+                                style="background: linear-gradient(135deg, #174A7C 60%, #B89C5A 100%);">
+                                <h5 class="mb-1" style="color:#fff !important">العمالة المسجلة اون لاين</h5>
+                                <h3 class="mb-0" style="color:#fff !important">{{ $todayCountNull }}</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="p-4 shadow-sm rounded-4 text-white fw-bold"
+                                style="background: linear-gradient(135deg, #174A7C 60%, #B89C5A 100%);">
+                                <h5 class="mb-1" style="color:#fff !important">العمالة المسجلة يدوي</h5>
+                                <h3 class="mb-0" style="color:#fff !important">{{ $todayCountUser }}</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
                             <div class="p-4 shadow-sm rounded-4 text-white fw-bold"
                                 style="background: linear-gradient(135deg, #B89C5A 60%, #174A7C 100%);">
                                 <h5 class="mb-1" style="color:#fff !important">إجمالي العمالة المسجلة</h5>

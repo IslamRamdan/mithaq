@@ -37,9 +37,11 @@ class RegisterController extends Controller
     $workers = \App\Models\Worker::orderBy('updated_at', 'asc')->paginate(20);
     // عدد العمالة المسجلين اليوم
     $todayCount = \App\Models\Worker::whereDate('created_at', now()->toDateString())->count();
+    $todayCountNull = \App\Models\Worker::whereDate('created_at', now()->toDateString())->where('user', null)->count();
+    $todayCountUser = \App\Models\Worker::whereDate('created_at', now()->toDateString())->where('user', '!=', null)->count();
 
     // إجمالي العمالة المسجلة
     $totalCount = \App\Models\Worker::count();
-    return view('admin.registrations', compact('workers', 'todayCount', 'totalCount'));
+    return view('admin.registrations', compact('workers', 'todayCount', 'totalCount', 'todayCountNull', 'todayCountUser'));
   }
 }
