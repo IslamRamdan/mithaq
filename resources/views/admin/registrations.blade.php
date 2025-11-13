@@ -84,6 +84,7 @@
                                 <th>صورة البطاقة</th>
                                 <th>العميل</th>
                                 <th>ملاحظات</th>
+                                <th>تاريخ التسجيل</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -135,6 +136,7 @@
                                             تعديل
                                         </a>
                                     </td>
+                                    <td>{{ $worker->updated_at ? $worker->updated_at->format('Y-m-d H:i') : '-' }}</td>
                                 </tr>
                             @empty
                                 <tr>
