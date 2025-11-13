@@ -93,6 +93,7 @@ Route::post('/register/apply', [\App\Http\Controllers\RegisterController::class,
 
 Route::get('/admin/registrations', [\App\Http\Controllers\RegisterController::class, 'list'])->name('admin.registrations');
 Route::get('/admin/registrations/search', [\App\Http\Controllers\AdminController::class, 'search'])->name('admin.registrations.search');
+Route::get('/admin/user/worker', [\App\Http\Controllers\RegisterController::class, 'userWorker'])->name('admin.registrations.userWorker');
 
 Route::post('/companies/apply', [\App\Http\Controllers\CompanyController::class, 'apply'])->name('companies.apply');
 

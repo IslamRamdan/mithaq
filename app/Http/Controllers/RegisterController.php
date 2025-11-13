@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Worker;
+use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -43,5 +46,19 @@ class RegisterController extends Controller
     // إجمالي العمالة المسجلة
     $totalCount = \App\Models\Worker::count();
     return view('admin.registrations', compact('workers', 'todayCount', 'totalCount', 'todayCountNull', 'todayCountUser'));
+  }
+
+  public function userWorker()
+  {
+    # code...
+    $today = Carbon::today();
+
+    $counts = Worker::select('user')
+      ->whereDate('created_at', $today)
+      ->groupBy('user')
+      ->selectRaw('user, COUNT(*) as total_customers')
+      ->get();
+
+    return view('admin.user', compact('counts'));
   }
 }

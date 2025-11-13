@@ -57,7 +57,8 @@
                             <div class="p-4 shadow-sm rounded-4 text-white fw-bold"
                                 style="background: linear-gradient(135deg, #174A7C 60%, #B89C5A 100%);">
                                 <h5 class="mb-1" style="color:#fff !important">العمالة المسجلة يدوي</h5>
-                                <h3 class="mb-0" style="color:#fff !important">{{ $todayCountUser }}</h3>
+                                <h3 class="mb-0" style="color:#fff !important"><a style="color:#fff !important"
+                                        href="{{ route('admin.registrations.userWorker') }}">{{ $todayCountUser }}</a></h3>
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
