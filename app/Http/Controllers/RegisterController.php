@@ -54,7 +54,7 @@ class RegisterController extends Controller
     $today = Carbon::today();
 
     $counts = Worker::select('user')
-      ->whereDate('created_at', $today)
+      ->whereDate('updated_at', $today)
       ->groupBy('user')
       ->selectRaw('user, COUNT(*) as total_customers')
       ->get();
