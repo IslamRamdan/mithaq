@@ -72,6 +72,8 @@
                 @endif
 
                 <div class="table-responsive">
+                    <button id="exportExcel" class="btn btn-success mb-3">📤 تصدير Excel</button>
+
                     <table class="table table-bordered align-middle text-center table-hover bg-white mb-0">
                         <thead
                             style="background: linear-gradient(135deg, #174A7C 60%, #B89C5A 100%);
@@ -203,5 +205,22 @@
                 });
             });
         </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+        <script>
+            document.getElementById("exportExcel").addEventListener("click", function() {
+
+                // الحصول على الجدول
+                const table = document.querySelector("table");
+
+                // تحويل الجدول إلى Sheet
+                const workbook = XLSX.utils.table_to_book(table, {
+                    sheet: "Workers"
+                });
+
+                // تنزيل الملف
+                XLSX.writeFile(workbook, "workers.xlsx");
+            });
+        </script>
+
     </div>
 @endsection
