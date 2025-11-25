@@ -244,6 +244,7 @@
                                     <option value="احمد محمود">احمد محمود</option>
                                     <option value="اسلام رمضان">اسلام رمضان</option>
                                     <option value="خديجة">خديجة</option>
+                                    <option value="رؤى">رؤى</option>
                                 </select>
                             </div>
 
