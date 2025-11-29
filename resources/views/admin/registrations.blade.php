@@ -153,17 +153,15 @@
                     </table>
                 </div>
 
-                @php
+                {{-- @php
                     $currentRoute = Route::currentRouteName();
                 @endphp
 
-                @if (
-                    $workers instanceof \Illuminate\Pagination\LengthAwarePaginator &&
-                        Route::currentRouteName() !== 'admin.registrations.search')
+                @if ($workers instanceof \Illuminate\Pagination\LengthAwarePaginator && Route::currentRouteName() !== 'admin.registrations.search')
                     <div class="mt-4">
                         {{ $workers->links('pagination::bootstrap-5') }}
                     </div>
-                @endif
+                @endif --}}
             </div>
         </div>
         <script>
