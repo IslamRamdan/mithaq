@@ -207,7 +207,7 @@
                             </div>
 
                             {{-- الرقم القومي --}}
-                            <div class="mb-4">
+                            {{-- <div class="mb-4">
                                 <label class="form-label">🆔 الرقم القومي <span
                                         class="optional-badge">(اختياري)</span></label>
                                 <input type="text" name="national_id" id="national_id" maxlength="14"
@@ -217,7 +217,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                                 <small class="form-text">يجب أن يتكون من 14 رقمًا</small>
-                            </div>
+                            </div> --}}
 
                             {{-- الوظيفة --}}
                             <div class="mb-4">
@@ -245,6 +245,9 @@
                                     <option value="اسلام رمضان">اسلام رمضان</option>
                                     <option value="خديجة">خديجة</option>
                                     <option value="رؤى">رؤى</option>
+                                    <option value="نادين">نادين</option>
+                                    <option value="احمد طاهر">احمد طاهر</option>
+                                    <option value="مريم">مريم</option>
                                 </select>
                             </div>
 
@@ -260,7 +263,7 @@
                             </div>
 
                             {{-- الصورة الشخصية --}}
-                            <div class="mb-4">
+                            {{-- <div class="mb-4">
                                 <label class="form-label">📸 الصورة الشخصية <span
                                         class="optional-badge">(اختياري)</span></label>
                                 <input type="file" name="personal_photo" id="personal_photo"
@@ -269,10 +272,10 @@
                                 @error('personal_photo')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             {{-- صورة البطاقة --}}
-                            <div class="mb-4">
+                            {{-- <div class="mb-4">
                                 <label class="form-label">🪪 صورة البطاقة <span
                                         class="optional-badge">(اختياري)</span></label>
                                 <input type="file" name="id_card_photo" id="id_card_photo"
@@ -281,7 +284,7 @@
                                 @error('id_card_photo')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             {{-- ملاحظات --}}
                             <div class="mb-4">
