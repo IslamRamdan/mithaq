@@ -32,8 +32,8 @@
             </li>
             <!-- رابط أيام الحضور -->
             <li class="nav-item">
-                <a class="nav-link @if (Route::currentRouteName() == 'attendance.search') active @endif text-white"
-                    href="{{ route('attendance.search') }}">
+                <a class="nav-link @if (Route::currentRouteName() == 'attendance.index') active @endif text-white"
+                    href="{{ route('attendance.index') }}">
                     <i class="fas fa-calendar-check me-2"></i>اثبات الحضور
                 </a>
             </li>
