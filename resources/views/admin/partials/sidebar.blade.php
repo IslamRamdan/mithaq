@@ -30,6 +30,13 @@
                     <i class="fas fa-building me-2"></i> طلبات تسجيل الشركات
                 </a>
             </li>
+            <!-- رابط أيام الحضور -->
+            <li class="nav-item">
+                <a class="nav-link @if (Route::currentRouteName() == 'attendance.days') active @endif text-white"
+                    href="{{ route('attendance.days') }}">
+                    <i class="fas fa-calendar-check me-2"></i> أيام الحضور
+                </a>
+            </li>
             <li class="nav-item mt-4">
                 <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf

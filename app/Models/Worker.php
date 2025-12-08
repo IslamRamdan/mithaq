@@ -19,4 +19,8 @@ class Worker extends Model
         'message',
         'user',
     ];
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }

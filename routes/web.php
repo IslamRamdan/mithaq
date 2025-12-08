@@ -13,6 +13,7 @@ use App\Http\Controllers\TranslationController;
 use App\Http\Controllers\FlightBookingController;
 use App\Http\Controllers\HotelBookingController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\CompanyController;
@@ -113,3 +114,17 @@ Route::view('/delete-account', 'delete-account')->name('delete.account');
 Route::post('/register-apply', [WorkerController::class, 'store'])->name('register.apply');
 Route::post('/register-apply/admin', [AdminController::class, 'store'])->name('register.apply.admin');
 Route::post('/workers/{id}/save-note', [WorkerController::class, 'saveNote'])->name('workers.saveNote');
+
+// لعرض الصفحة
+Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+
+// لحفظ الحضور
+Route::post('/attendance/store', [AttendanceController::class, 'store'])->name('attendance.store');
+
+// لبحث العملاء عبر رقم الهاتف (AJAX)
+Route::get('/attendance/search-worker', [AttendanceController::class, 'searchWorker'])->name('attendance.search');
+// صفحة الأيام التي بها حضور
+Route::get('/attendance/days', [AttendanceController::class, 'daysIndex'])->name('attendance.days');
+
+// عرض تفاصيل الحضور في يوم معين
+Route::get('/attendance/day/{date}', [AttendanceController::class, 'dayDetail'])->name('attendance.day.detail');

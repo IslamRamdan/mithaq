@@ -240,6 +240,17 @@
                                     <option value="اسلام رمضان"
                                         {{ old('user', $worker->user ?? '') == 'اسلام رمضان' ? 'selected' : '' }}>اسلام
                                         رمضان</option>
+                                    <option value="خديجة"
+                                        {{ old('user', $worker->user ?? '') == 'خديجة' ? 'selected' : '' }}>خديجة</option>
+                                    <option value="رؤى"
+                                        {{ old('user', $worker->user ?? '') == 'رؤى' ? 'selected' : '' }}>رؤى</option>
+                                    <option value="نادين"
+                                        {{ old('user', $worker->user ?? '') == 'نادين' ? 'selected' : '' }}>نادين</option>
+                                    <option value="احمد طاهر"
+                                        {{ old('user', $worker->user ?? '') == 'احمد طاهر' ? 'selected' : '' }}>احمد طاهر
+                                    </option>
+                                    <option value="مريم"
+                                        {{ old('user', $worker->user ?? '') == 'مريم' ? 'selected' : '' }}>مريم</option>
                                 </select>
                             </div>
 
