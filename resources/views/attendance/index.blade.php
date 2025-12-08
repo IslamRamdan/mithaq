@@ -40,8 +40,7 @@
                     var query = phoneInput.value.trim();
                     console.log(query);
 
-
-                    if (query.length < 1) {
+                    if (query.length <= 10) {
                         workersTableBody.innerHTML = '';
                         return;
                     }
